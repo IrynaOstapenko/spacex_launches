@@ -1,19 +1,74 @@
 <template>
-	<Navigation />
-	<div class="hero">
-		
+	
+	<div class="hero">		
+		<Navigation />
+		<LaunchCard v-for="(launch, index) in launches" :number="index+1" :title="launch.title" :date="launch.date"/>
+		<Footer />
 	</div>
+	
+
 </template>
 
 <script>
 	import Navigation from '../components/Navigation.vue';
+	import Footer from '../components/Footer.vue';
+	import LaunchCard from '../components/LaunchCard.vue';
 
 	export default {
 		components: {
-			Navigation
+			Navigation,
+			Footer,
+			LaunchCard
 		},
 		data() {
-			
+			return {
+				launches: [],
+				title: '',
+				names: []
+			}	
+		},
+
+		async created() {
+			this.fetchLaunches();
+		},
+
+		methods: {
+			async fetchLaunches() {
+				const url = 'https://api.spacexdata.com/v4/launches/';
+				const response = await fetch(url);
+				try {
+					await this.handleResponse(response);
+				} catch (error) {
+					console.log(error);
+					this.error = error.message;
+				}
+			},
+
+			async handleResponse(response) {
+				if (response.status >= 200 && response.status < 300) {
+					const launchesAll = await response.json();
+					console.log(launchesAll);
+					this.launches = launchesAll.map((launch) => {
+						return {
+							title: launch.name,
+							date: launch.date_local,
+						}
+					});
+					console.log(this.launches);
+					return true;
+				} else {
+					if (response.status === 404) {
+						throw new Error('Url not found');
+					}
+					if (response.status === 401) {
+						throw new Error('Unauthorized');
+					}
+					if (response.status > 500) {
+						throw new Error('Server error');
+					}
+					throw new Error('Something went wrong');
+				}		
+			},
 		}
 	}
 </script>
@@ -23,6 +78,7 @@
 		width: 100%;
 		height: 100%;
 		position: relative;
+		padding-top: 90px;
 		background-image: linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url('/images/space-stars.jpg');
 		background-position: center;
 		background-repeat: no-repeat;

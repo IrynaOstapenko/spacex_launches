@@ -18,7 +18,9 @@ export default {
 
 <style scoped>
     .navigation {
-        height: 115px;
+        position: fixed;
+        top: 0;
+        height: 80px;
         width: 100%;
         background-color: black;
         display: flex;
