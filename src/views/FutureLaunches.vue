@@ -25,8 +25,8 @@ export default {
   data() {
     return {
       launches: [],
-	  futureLaunches: [],
-	  currentDate: new Date().getTime(),
+      futureLaunches: [],
+      currentDate: new Date().getTime(),
     };
   },
 
@@ -53,15 +53,17 @@ export default {
         this.launches = launchesAll.map((launch) => {
           return {
             title: launch.name,
-            date: new Date(launch.date_utc)
+            date: new Date(launch.date_utc),
           };
         });
         console.log(this.launches);
-		this.futureLaunches = this.launches.filter(launch => {
-			return launch && (new Date(launch.date)).getTime() > this.currentDate;
-		})
-		console.log(this.currentDate);
-		console.log(this.futureLaunches);
+        this.futureLaunches = this.launches.filter((launch) => {
+          return launch && new Date(launch.date).getTime() > this.currentDate;
+        });
+        console.log(this.futureLaunches);
+        this.futureLaunches.sort((a, b) => {
+          return a.date - b.date;
+        });
         return true;
       } else {
         if (response.status === 404) {

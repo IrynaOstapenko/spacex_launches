@@ -2,10 +2,10 @@
   <div class="hero">
     <Navigation />
     <LaunchCard
-      v-for="(launch, index) in previousLaunches"
+      v-for="(previousLaunch, index) in previousLaunches"
       :number="index + 1"
-      :title="launch.title"
-      :date="launch.date.toLocaleString()"
+      :title="previousLaunch.title"
+      :date="previousLaunch.date.toLocaleString()"
     />
     <Footer />
   </div>
@@ -63,8 +63,8 @@ export default {
         });
         console.log(this.previousLaunches);
         this.previousLaunches.sort((a, b) => {
-          return b.date - a.date;
-      });
+          return a.date - b.date;
+        });
         console.log(this.previousLaunches);
         return true;
       } else {
