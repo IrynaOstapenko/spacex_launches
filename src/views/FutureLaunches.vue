@@ -2,10 +2,10 @@
   <div class="hero">
     <Navigation />
     <LaunchCard
-      v-for="(launch, index) in launches"
+      v-for="(futureLaunch, index) in futureLaunches"
       :number="index + 1"
-      :title="launch.title"
-      :date="launch.date"
+      :title="futureLaunch.title"
+      :date="futureLaunch.date.toLocaleString()"
     />
     <Footer />
   </div>
@@ -25,8 +25,7 @@ export default {
   data() {
     return {
       launches: [],
-      title: "",
-      names: [],
+	  futureLaunches: [],
 	  currentDate: new Date().getTime(),
     };
   },
@@ -54,11 +53,15 @@ export default {
         this.launches = launchesAll.map((launch) => {
           return {
             title: launch.name,
-            date: new Date(launch.date_utc).toLocaleString(),
+            date: new Date(launch.date_utc)
           };
         });
         console.log(this.launches);
+		this.futureLaunches = this.launches.filter(launch => {
+			return launch && (new Date(launch.date)).getTime() > this.currentDate;
+		})
 		console.log(this.currentDate);
+		console.log(this.futureLaunches);
         return true;
       } else {
         if (response.status === 404) {
