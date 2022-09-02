@@ -6,6 +6,7 @@
       :number="index + 1"
       :title="futureLaunch.title"
       :date="futureLaunch.date.toLocaleString()"
+      :timeLeft="futureLaunch.timeLeft"
     />
     <Footer />
   </div>
@@ -54,6 +55,7 @@ export default {
           return {
             title: launch.name,
             date: new Date(launch.date_utc),
+            timeLeft: new Date(launch.date_utc) - new Date()
           };
         });
         console.log(this.launches);

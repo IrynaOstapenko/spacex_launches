@@ -5,12 +5,12 @@
     <div class="launch-info">
       <div class="launch-info__title">{{ title }}</div>
       <div class="date-and-time-section">
-        <div>Date</div>
+        <button @click="isHidden = false; isActive=false" :class="{inactive: isHidden}">Date</button>
         <div class="vertical-line-small"></div>
-        <div>Time left</div>
+        <button @click="isActive = true; isHidden = true" :class="{inactive: !isActive}">Time left</button>
       </div>
-      <div class="launch-info__date">{{ date }}</div>
-      <div class="launch-info__time-left">{{ timeLeft }}</div>
+      <div v-show="!isHidden" class="launch-info__date">{{ date }}</div>
+      <div v-show="isActive" class="launch-info__time-left">{{ timeLeft }}</div>
     </div>
   </div>
 </template>
@@ -23,6 +23,18 @@ export default {
     date: String,
     timeLeft: String,
   },
+  data() {
+    return {
+      isHidden: false,
+      isActive: false
+    }
+  },
+
+  // methods: {
+  //   changeStyle() {
+  //     this.isActive = true;
+  //   }
+  // }
 };
 </script>
 
@@ -60,6 +72,14 @@ export default {
   justify-content: space-between;
 }
 
+button {
+  color: white;
+}
+
+.inactive {
+  color: #B7B7B7; 
+}
+
 .launch-info__title {
   font-size: 36px;
 }
@@ -75,5 +95,13 @@ export default {
   height: 24px;
   margin-right: 24px;
   margin-left: 24px;
+}
+
+.active {
+  color: white; 
+}
+
+.inactive {
+  color: #B7B7B7; 
 }
 </style>
