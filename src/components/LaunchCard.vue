@@ -48,14 +48,17 @@ export default {
 
   methods: {
     calculateTime(ms) {
-      const days = Math.floor(ms / (24 * 60 * 60 * 1000));
-      const daysms = ms % (24 * 60 * 60 * 1000);
-      const hours = Math.floor(daysms / (60 * 60 * 1000));
-      const hoursms = ms % (60 * 60 * 1000);
-      const minutes = Math.floor(hoursms / (60 * 1000));
-      const minutesms = ms % (60 * 1000);
-      const sec = Math.floor(minutesms / 1000);
-      return days + " " + "days" + " " + hours + " " + "hours" + " " + minutes + " " + "minutes" + " " + sec + " " + "seconds";
+      let days = Math.floor(ms / (24 * 60 * 60 * 1000));
+      let daysms = ms % (24 * 60 * 60 * 1000);
+      let hours = Math.floor(daysms / (60 * 60 * 1000));
+      hours = hours <= 9 ? '0' + hours : hours;
+      let hoursms = ms % (60 * 60 * 1000);
+      let minutes = Math.floor(hoursms / (60 * 1000));
+      minutes = minutes <= 9 ? '0' + minutes : minutes;
+      let minutesms = ms % (60 * 1000);
+      let sec = Math.floor(minutesms / 1000);
+      sec = sec <= 9 ? '0' + sec : sec;
+      return "T-" + days + " " + "days" + " " + hours + ":" + minutes + ":" + sec;
     },
   },
 };
