@@ -5,12 +5,28 @@
     <div class="launch-info">
       <div class="launch-info__title">{{ title }}</div>
       <div class="date-and-time-section">
-        <button @click="isHidden = false; isActive=false" :class="{inactive: isHidden}">Date</button>
+        <button
+          @click="
+            isHidden = false;
+            isActive = false;
+          "
+          :class="{ inactive: isHidden }"
+        >
+          Date
+        </button>
         <div class="vertical-line-small"></div>
-        <button @click="isActive = true; isHidden = true" :class="{inactive: !isActive}">Time left</button>
+        <button
+          @click="
+            isActive = true;
+            isHidden = true;
+          "
+          :class="{ inactive: !isActive }"
+        >
+          Time left
+        </button>
       </div>
       <div v-show="!isHidden" class="launch-info__date">{{ date }}</div>
-      <div v-show="isActive" class="launch-info__time-left">{{ timeLeft }}</div>
+      <div v-show="isActive" class="launch-info__time-left">{{ calculateTime(timeLeft) }}</div>
     </div>
   </div>
 </template>
@@ -26,15 +42,22 @@ export default {
   data() {
     return {
       isHidden: false,
-      isActive: false
-    }
+      isActive: false,
+    };
   },
 
-  // methods: {
-  //   changeStyle() {
-  //     this.isActive = true;
-  //   }
-  // }
+  methods: {
+    calculateTime(ms) {
+      const days = Math.floor(ms / (24 * 60 * 60 * 1000));
+      const daysms = ms % (24 * 60 * 60 * 1000);
+      const hours = Math.floor(daysms / (60 * 60 * 1000));
+      const hoursms = ms % (60 * 60 * 1000);
+      const minutes = Math.floor(hoursms / (60 * 1000));
+      const minutesms = ms % (60 * 1000);
+      const sec = Math.floor(minutesms / 1000);
+      return days + " " + "days" + " " + hours + " " + "hours" + " " + minutes + " " + "minutes" + " " + sec + " " + "seconds";
+    },
+  },
 };
 </script>
 
@@ -77,7 +100,7 @@ button {
 }
 
 .inactive {
-  color: #B7B7B7; 
+  color: #b7b7b7;
 }
 
 .launch-info__title {
@@ -98,10 +121,10 @@ button {
 }
 
 .active {
-  color: white; 
+  color: white;
 }
 
 .inactive {
-  color: #B7B7B7; 
+  color: #b7b7b7;
 }
 </style>
