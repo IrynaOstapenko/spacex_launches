@@ -78,8 +78,8 @@ export default {
 
 <style scoped>
 .launch-card {
-  height: 170px;
-  width: 90%;
+  height: 120px;
+  width: 95%;
   margin-right: auto;
   margin-left: auto;
   background-color: black;
@@ -90,21 +90,22 @@ export default {
   justify-content: flex-start;
   align-items: center;
   padding-left: 40px;
+  border-radius: 10px;
 }
 
 .sequence-number {
-  font-size: 50px;
+  font-size: 35px;
   margin-right: 40px;
 }
 
 .vertical-line {
   border-left: 2px solid white;
-  height: 140px;
+  height: 100px;
   margin-right: 40px;
 }
 
 .launch-info {
-  height: 150px;
+  height: 100px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
@@ -119,20 +120,21 @@ button {
 }
 
 .launch-info__title {
-  font-size: 36px;
+  font-size: 24px;
 }
 
 .date-and-time-section {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
+  font-size: var(--mobile-font-size);
 }
 
 .vertical-line-small {
   border-left: 1px solid white;
-  height: 24px;
-  margin-right: 24px;
-  margin-left: 24px;
+  height: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .active {
@@ -141,5 +143,48 @@ button {
 
 .inactive {
   color: #b7b7b7;
+}
+
+.launch-info__date,
+.launch-info__time-left {
+  font-size: var(--mobile-font-size);
+}
+
+@media only screen and (min-width: 768px) {
+  .launch-card {
+    height: 170px;
+    width: 90%;
+  }
+
+  .sequence-number {
+    font-size: 50px;
+  }
+
+  .vertical-line {
+    height: 140px;
+  }
+
+  .launch-info {
+    height: 150px;
+  }
+
+  .launch-info__title {
+    font-size: 36px;
+  }
+
+  .date-and-time-section {
+    font-size: 24px;
+  }
+
+  .vertical-line-small {
+    height: 24px;
+    margin-right: 24px;
+    margin-left: 24px;
+  }
+
+  .launch-info__date,
+  .launch-info__time-left {
+    font-size: 24px;
+  }
 }
 </style>
