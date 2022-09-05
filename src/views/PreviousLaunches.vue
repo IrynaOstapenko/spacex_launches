@@ -6,6 +6,7 @@
       :number="index + 1"
       :title="previousLaunch.title"
       :date="previousLaunch.date.toLocaleString()"
+      :result="previousLaunch.result"
     />
     <Footer />
   </div>
@@ -55,6 +56,7 @@ export default {
           return {
             title: launch.name,
             date: new Date(launch.date_utc),
+            result: launch.success,
           };
         });
         console.log(this.launches);

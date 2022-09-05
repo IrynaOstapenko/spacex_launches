@@ -55,7 +55,7 @@ export default {
           return {
             title: launch.name,
             date: new Date(launch.date_utc),
-            timeLeft: new Date(launch.date_utc) - new Date()
+            timeLeft: new Date(launch.date_utc) - new Date(),
           };
         });
         console.log(this.launches);
