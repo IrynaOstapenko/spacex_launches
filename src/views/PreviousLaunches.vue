@@ -1,6 +1,10 @@
 <template>
   <div class="hero">
+
     <Navigation />
+
+    <div class="error-message" v-if="error">{{ error }}</div>
+
     <LaunchCard
       v-for="(previousLaunch, index) in previousLaunches"
       :number="index + 1"
@@ -8,6 +12,7 @@
       :date="previousLaunch.date.toLocaleString()"
       :result="previousLaunch.result"
     />
+
     <Footer />
   </div>
 </template>
@@ -29,6 +34,7 @@ export default {
       previousLaunches: [],
       sortedPreviousLaunches: [],
       currentDate: new Date().getTime(),
+      error: ''
     };
   },
 
@@ -43,7 +49,6 @@ export default {
       try {
         await this.handleResponse(response);
       } catch (error) {
-        console.log(error);
         this.error = error.message;
       }
     },
@@ -51,7 +56,6 @@ export default {
     async handleResponse(response) {
       if (response.status >= 200 && response.status < 300) {
         const launchesAll = await response.json();
-        console.log(launchesAll);
         this.launches = launchesAll.map((launch) => {
           return {
             title: launch.name,
@@ -59,15 +63,12 @@ export default {
             result: launch.success,
           };
         });
-        console.log(this.launches);
         this.previousLaunches = this.launches.filter((launch) => {
           return launch && new Date(launch.date).getTime() < this.currentDate;
         });
-        console.log(this.previousLaunches);
         this.previousLaunches.sort((a, b) => {
           return a.date - b.date;
         });
-        console.log(this.previousLaunches);
         return true;
       } else {
         if (response.status === 404) {
@@ -98,6 +99,12 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   overflow-x: hidden;
+}
+
+.error-message {
+  position: relative;
+  color: white;
+  font-size: 30px;
 }
 </style>
 

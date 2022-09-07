@@ -1,6 +1,10 @@
 <template>
   <div class="hero">
+
     <Navigation />
+
+    <div class="error-message" v-if="error">{{ error }}</div>
+
     <LaunchCard
       v-for="(futureLaunch, index) in futureLaunches"
       :number="index + 1"
@@ -8,6 +12,7 @@
       :date="futureLaunch.date.toLocaleString()"
       :timeLeft="futureLaunch.timeLeft"
     />
+
     <Footer />
   </div>
 </template>
@@ -28,6 +33,7 @@ export default {
       launches: [],
       futureLaunches: [],
       currentDate: new Date().getTime(),
+      error: ''
     };
   },
 
@@ -42,7 +48,6 @@ export default {
       try {
         await this.handleResponse(response);
       } catch (error) {
-        console.log(error);
         this.error = error.message;
       }
     },
@@ -50,7 +55,6 @@ export default {
     async handleResponse(response) {
       if (response.status >= 200 && response.status < 300) {
         const launchesAll = await response.json();
-        console.log(launchesAll);
         this.launches = launchesAll.map((launch) => {
           return {
             title: launch.name,
@@ -58,11 +62,10 @@ export default {
             timeLeft: new Date(launch.date_utc) - new Date(),
           };
         });
-        console.log(this.launches);
+
         this.futureLaunches = this.launches.filter((launch) => {
           return launch && new Date(launch.date).getTime() > this.currentDate;
         });
-        console.log(this.futureLaunches);
         this.futureLaunches.sort((a, b) => {
           return a.date - b.date;
         });
@@ -96,6 +99,12 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   overflow-x: hidden;
+}
+
+.error-message {
+  position: relative;
+  color: white;
+  font-size: 30px;
 }
 </style>
 

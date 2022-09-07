@@ -1,12 +1,14 @@
 <template>
   <div class="navigation">
+
     <RouterLink :to="{ name: 'future' }" class="nav-image"
-      ><img src="/images/white-shuttle.png" alt="white-shuttle"
-    /></RouterLink>
+      ><img src="/images/white-shuttle.png" alt="white-shuttle"></RouterLink>
+
     <nav :class="{ visible: isOpen }">
       <RouterLink :to="{ name: 'future' }">Upcoming Launches</RouterLink>
       <RouterLink :to="{ name: 'previous' }">Previous Launches</RouterLink>
     </nav>
+    
     <button class="hamburger-button" @click="toggleMenu()">
       <img src="/images/hamburger-button.png" alt="hamburger-menu-button" />
     </button>

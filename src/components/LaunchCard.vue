@@ -1,7 +1,9 @@
 <template>
   <div class="launch-card">
     <div class="sequence-number">{{ number }}</div>
+
     <div class="vertical-line"></div>
+
     <div class="launch-info">
       <div class="launch-info__title">{{ title }}</div>
       <div class="date-and-time-section">
@@ -14,6 +16,7 @@
         >
           Date
         </button>
+
         <div class="vertical-line-small"></div>
         <button
           @click="
@@ -25,6 +28,7 @@
           {{ timeLeft ? "Time left" : "Result" }}
         </button>
       </div>
+      
       <div v-show="!isHidden" class="launch-info__date">{{ date }}</div>
       <div v-show="isActive" class="launch-info__time-left">
         {{ timeLeft ? calculateTime(timeLeft) : defineResult(result) }}
